@@ -58,13 +58,11 @@ app.post('/api/create-payment', async (req, res) => {
 		// Return the checkout URL to the frontend
 		res.status(200).json({ paymentUrl: response.data.checkout_url });
 	} catch (error) {
-		console.error(
-			'Error creating payment:',
-			error.response ? error.response.data : error.message
-		);
+		const errorMessage = error.response ? error.response.data : error.message;
+		console.error('Error creating payment on Revolut API:', errorMessage);
 		res.status(500).json({
 			error: 'Failed to create payment',
-			details: error.response ? error.response.data : error.message,
+			details: errorMessage,
 		});
 	}
 });
