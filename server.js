@@ -19,24 +19,32 @@ const baseURL = 'https://sandbox-merchant.revolut.com'; // Use 'https://merchant
 
 // Create a new payment order
 app.post('/api/create-payment', async (req, res) => {
-	const { amount, currency, description, customer_email } = req.body;
+	const {
+		amount,
+		currency,
+		description,
+		customer_email,
+		pickup,
+		passenger,
+		date,
+	} = req.body;
 
 	// Ensure all required fields are provided
-	if (!amount || !currency || !description || !customer_email) {
+	if (!amount || !currency || !description || !pickup || !passenger || !date) {
 		return res.status(400).json({ error: 'Missing required fields' });
 	}
 
 	console.log(amount, currency);
-
 	try {
+		const formattedDescription = `${description}\nDate: ${date}\nPickup: ${pickup} - Passenger: ${passenger}`;
 		// Prepare the request payload
 		const data = {
 			amount: amount * 100, // Convert to smallest currency units (e.g., pence)
 			currency: currency,
 			capture_mode: 'AUTOMATIC', // Use 'MANUAL' for delayed capture
 			merchant_order_ext_ref: `order-${Date.now()}`, // Unique order reference
-			description: description,
-			customer_email: customer_email,
+			description: formattedDescription,
+			customer_email: customer_email || '',
 		};
 
 		// Make the request to Revolut's API to create an order
