@@ -26,6 +26,8 @@ app.post('/api/create-payment', async (req, res) => {
 		return res.status(400).json({ error: 'Missing required fields' });
 	}
 
+	console.log(amount, currency);
+
 	try {
 		// Prepare the request payload
 		const data = {
@@ -51,6 +53,7 @@ app.post('/api/create-payment', async (req, res) => {
 
 		// Send the request using Axios
 		const response = await axios(config);
+		console.log('Payment created:', response.data);
 
 		// Return the checkout URL to the frontend
 		res.status(200).json({ paymentUrl: response.data.checkout_url });
