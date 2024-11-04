@@ -109,6 +109,10 @@ app.post('/api/refund', async (req, res) => {
 	}
 });
 
+app.get('/', async (req, res) => {
+	res.send('Welcome to the Revolut Payment Integration Server!');
+});
+
 // Start the server
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
