@@ -44,7 +44,7 @@ app.post('/api/create-payment', async (req, res) => {
 			capture_mode: 'AUTOMATIC', // Use 'MANUAL' for delayed capture
 			merchant_order_ext_ref: `order-${Date.now()}`, // Unique order reference
 			description: formattedDescription,
-			customer_email: customer_email || '',
+			...(customer_email && { customer_email: customer_email }),
 		};
 
 		// Make the request to Revolut's API to create an order
