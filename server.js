@@ -36,7 +36,7 @@ app.post('/api/create-payment', async (req, res) => {
 
 	console.log(amount, currency);
 	try {
-		const formattedDescription = `${description}\nDate: ${date}\nPickup: ${pickup} - Passenger: ${passenger}`;
+		const formattedDescription = `${description}\nDate: ${date}\nPickup: ${pickup} - Passenger: ${passenger}\nEmail: ${email}`;
 		// Prepare the request payload
 		const data = {
 			amount: amount * 100, // Convert to smallest currency units (e.g., pence)
@@ -47,7 +47,7 @@ app.post('/api/create-payment', async (req, res) => {
 			...(customer_email && { customer_email: customer_email }),
 		};
 
-		// Make the request to Revolut's API to create an order
+		// Make the request to Revolut API to create an order
 		const config = {
 			method: 'post',
 			url: `${baseURL}/api/1.0/orders`,
